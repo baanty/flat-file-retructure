@@ -22,10 +22,15 @@ The source code is written with the below technology stack
   Even if the application.properties file is self explanatory, as brief description of the properties is given below.
 
 input.file.location=/root/input /* This is the input file directory */
+
 output.file.location=/root/output /* This is the output target file directory */
+
 input.file.name=input_data.txt /* This is the name of the input file */
+
 output.file.name=output_data.txt /* This is the name of the output file */
+
 column.name.converter.file=column_converter.properties /* Name of the file, given in 2) . This is configurable */
+
 acceptable.id.file=acceptable_ids.properties  /* Name of the file, given in 1) . This is configurable */
 
 
