@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class FileReadService {
+public class FileReaderWriterService {
 
 	@Value(value = "${input.file.location}")
 	String inputFileLocation;
