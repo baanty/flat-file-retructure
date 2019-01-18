@@ -8,7 +8,10 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
 
+import com.asset.config.PropertiesFileConfiguration;
 import com.asset.service.FileReaderWriterService;
 
 /**
@@ -18,12 +21,13 @@ import com.asset.service.FileReaderWriterService;
  * @author Pijush
  *
  */
-@SpringBootApplication()
-public class DataFileRestructureApp {
+@SpringBootApplication(scanBasePackageClasses = {PropertiesFileConfiguration.class},
+						scanBasePackages = {"com.asset.service"})
+public class DataFileRestructureApp extends SpringBootServletInitializer {
 	
 	@Autowired
 	FileReaderWriterService service;
-	
+
 	
 	/**
 	 * The {@link PostConstruct } ensures that the
@@ -40,6 +44,8 @@ public class DataFileRestructureApp {
 	 * @param args
 	 */
     public static void main(String[] args) {
-        SpringApplication.run(DataFileRestructureApp.class, args);
+    	ConfigurableApplicationContext context = SpringApplication.run(DataFileRestructureApp.class, args);
+        SpringApplication.exit(context, () -> 0);
     }
+
 }

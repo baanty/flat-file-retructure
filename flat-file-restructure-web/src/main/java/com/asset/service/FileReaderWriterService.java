@@ -1,6 +1,6 @@
 package com.asset.service;
 
-import static com.asset.util.Constants.BLANK;
+import static com.asset.util.Constants.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,7 +34,7 @@ public class FileReaderWriterService {
 	@Value(value = "${output.file.name}")
 	String outputFileName;
 	
-	private String cellSeparator = BLANK;
+	private String cellSeparator = TAB;
 	
 	@Autowired
 	private AcceptableIdsCollection acceptableIdsCollection;
@@ -68,8 +68,12 @@ public class FileReaderWriterService {
 	    			String cellValue = cellValues[columnIndex];
 	    		
 	    			if (rowIndex == 0) { /* Process the main header */
-	    				columnConfigCollection.getColumnConfigWithOldName(cellValue).setColumnIndex(columnIndex);
 	    				ColumnConfig columnConfig = columnConfigCollection.getColumnConfigWithOldName(cellValue);
+	    				
+	    				if (columnConfig == null) {
+	    					continue;
+	    				}
+	    				columnConfigCollection.getColumnConfigWithOldName(cellValue).setColumnIndex(columnIndex);
 	    				String header = columnConfigCollection.isColumnRenamed(cellValue) ? columnConfig.getNewColumnName() : cellValue ;
 	    				outputStream.write(header.getBytes());
 	    				outputStream.write(seperator.getBytes());

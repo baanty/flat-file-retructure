@@ -5,11 +5,9 @@ import java.io.InputStream;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import com.asset.vo.AcceptableIdsCollection;
 import com.asset.vo.ColumnConfig;
@@ -28,9 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 public class PropertiesFileConfiguration {
-
-	@Autowired
-	Environment environment;
 	
 	@Value("${column.name.converter.file}")
 	String columnNameConverterFile;
