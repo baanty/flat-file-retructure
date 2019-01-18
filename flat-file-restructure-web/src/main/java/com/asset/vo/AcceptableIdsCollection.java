@@ -97,4 +97,20 @@ public class AcceptableIdsCollection {
 					.map(Map.Entry::getValue)
 					.collect(Collectors.toList()));
 	}
+	
+	/**
+	 * Check if the old Id really exists in the provided data.
+	 * 
+	 * @param oldId : The {@link String} to pass the old object.
+	 * 
+	 * @return : check return if the old id exists.
+	 */
+	public boolean oldIdExists(String oldId) {
+		
+		if (oldId == null) {
+			return false;
+		}
+
+		return data.containsKey(oldId);
+	}
 }

@@ -63,6 +63,31 @@ public class ColumnConfigCollection {
 		return null;
 	}
 	
+	
+	/**
+	 * Use this method to get a column configuration
+	 * value object, which has a matching column index as
+	 * the passed parameter.
+	 *  
+	 * @param columnConfig : It is the {@link integer}
+	 * object, that has the column index of the input.
+	 * 
+	 * 
+	 */
+	public ColumnConfig getColumnConfigWithColumnIndex(int columnIndex) {
+		boolean columnConfigExists = data.stream().anyMatch(config -> config.getColumnIndex() == columnIndex );
+		
+		if (columnConfigExists) {
+			return data
+						.stream()
+						.filter(config -> config.getColumnIndex() == columnIndex )
+						.findFirst()
+						.get();
+		}
+		return null;
+	}
+	
+	
 	/**
 	 * Use this method to return the data as an unmodifiable 
 	 * collection.
@@ -71,5 +96,20 @@ public class ColumnConfigCollection {
 	 */
 	public synchronized List<ColumnConfig> getAllColumnConfigs() {
 		return Collections.unmodifiableList(data);
+	}
+	
+	/**
+	 * Use this method to check if the column is really renamed.
+	 * @param oldColumnName : The cold column name, which is checked for 
+	 * renaming.
+	 * 
+	 * @return : The boolean to check if the old column exists.
+	 */
+	public boolean isColumnRenamed(String oldColumnName) {
+		
+		if (oldColumnName != null) {
+			return data.contains(oldColumnName);
+		}
+		return false;
 	}
 }
