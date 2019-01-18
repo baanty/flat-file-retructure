@@ -1,14 +1,18 @@
 package com.asset.vo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
 /**
+ * Use this class to hold all the columns configurations of the 
+ * first properties file.
+ * 
+ * @author pijush
  *
  */
-
 public class ColumnConfigCollection {
 	
 	@NotNull
@@ -29,7 +33,7 @@ public class ColumnConfigCollection {
 	 * to the collection of the configuration column, which are red from
 	 * the properties file.
 	 * 
-	 * @param columnConfig : Pass the {@link ColumnConfig}} object to
+	 * @param columnConfig : Pass the {@link ColumnConfig} object to
 	 * the collection of all the column configurations. 
 	 */
 	public synchronized void addColumnConfig(ColumnConfig columnConfig) {
@@ -41,7 +45,7 @@ public class ColumnConfigCollection {
 	 * value object, which has a matching old column name as
 	 * the passed parameter.
 	 *  
-	 * @param columnConfig : It is the {@link String}} 
+	 * @param columnConfig : It is the {@link String}
 	 * object, that has the old column name.
 	 * 
 	 * 
@@ -57,5 +61,15 @@ public class ColumnConfigCollection {
 						.get();
 		}
 		return null;
+	}
+	
+	/**
+	 * Use this method to return the data as an unmodifiable 
+	 * collection.
+	 * @return : Gives the unmodifiable collection of column 
+	 * configurations.
+	 */
+	public synchronized List<ColumnConfig> getAllColumnConfigs() {
+		return Collections.unmodifiableList(data);
 	}
 }
