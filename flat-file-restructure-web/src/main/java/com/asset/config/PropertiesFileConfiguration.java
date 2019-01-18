@@ -54,10 +54,6 @@ public class PropertiesFileConfiguration {
 			int index = 0; 
 			
 			for (Entry<Object, Object> entry : properties.entrySet()) {
-				
-				if (index == 0) {
-					continue; /* Do not process the header of the main input file. */
-				}
 				ColumnConfig columnConfig = new ColumnConfig(entry.getKey().toString(), entry.getValue().toString(), index);
 				columnConfigCollection.addColumnConfig(columnConfig);
 				index++;
@@ -86,10 +82,10 @@ public class PropertiesFileConfiguration {
 			InputStream input = getClass().getClassLoader().getResourceAsStream(acceptableIdFile);
 			Properties properties = new Properties();
 			properties.load(input);
-			properties
-				.entrySet()
-				.stream()
-				.forEach(entry -> acceptableIdsCollection.addIdConfig(entry.getKey().toString(), entry.getValue().toString()));
+			
+			for (Entry<Object, Object> entry : properties.entrySet()) {
+				acceptableIdsCollection.addIdConfig(entry.getKey().toString(), entry.getValue().toString());
+			}
 		} catch (IOException exception) {
 			log.error("The properties file can not be loaded");
 			throw new RuntimeException(exception);

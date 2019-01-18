@@ -42,7 +42,7 @@ public class AcceptableIdsCollection {
 	 * ids.
 	 */
 	public synchronized void addIdConfig(String oldAcceptableId, String newAcceptableId) {
-		this.data.put(newAcceptableId, newAcceptableId);
+		this.data.put(oldAcceptableId, newAcceptableId);
 	}
 	
 	/**

@@ -12,4 +12,5 @@ public interface Constants {
 	public String BLANK = "";
 	public String SPACE = " ";
 	public String TAB = "\t";
+	public String NEW_LINE = "\n";
 }

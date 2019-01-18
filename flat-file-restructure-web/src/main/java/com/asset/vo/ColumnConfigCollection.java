@@ -3,8 +3,12 @@ package com.asset.vo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
+
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * Use this class to hold all the columns configurations of the 
@@ -107,9 +111,31 @@ public class ColumnConfigCollection {
 	 */
 	public boolean isColumnRenamed(String oldColumnName) {
 		
-		if (oldColumnName != null) {
-			return data.contains(oldColumnName);
+		if (oldColumnName != null && !CollectionUtils.isEmpty(data)) {
+			return getAllOldColumnNames().contains(oldColumnName);
 		}
 		return false;
+	}
+	
+	/**
+	 * Use this method to get all the
+	 * old column names of the Column COllections Value object.
+	 * 
+	 * @return : A {@link List} of {@link String} objects. These are the old
+	 * column names.
+	 */
+	public List<String> getAllOldColumnNames() {
+		
+		if (!CollectionUtils.isEmpty(data)) {
+			return data
+					.stream()
+					.filter(config -> (
+							config != null &&
+							StringUtils.hasText(config.getOldColumnName())) )
+					.map(ColumnConfig::getOldColumnName)
+					.collect(Collectors.toList());
+		}
+		return Collections.emptyList();
+		
 	}
 }

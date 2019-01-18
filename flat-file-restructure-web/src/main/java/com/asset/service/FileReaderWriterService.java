@@ -1,11 +1,14 @@
 package com.asset.service;
 
-import static com.asset.util.Constants.*;
+import static com.asset.util.Constants.NEW_LINE;
+import static com.asset.util.Constants.TAB;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,8 @@ public class FileReaderWriterService {
 	
 	private String cellSeparator = TAB;
 	
+	private String lineSeparator = NEW_LINE;
+	
 	@Autowired
 	private AcceptableIdsCollection acceptableIdsCollection;
 	
@@ -57,13 +62,17 @@ public class FileReaderWriterService {
 			  Scanner sc = new Scanner(inputStream, "UTF-8");
 				) {
 		    int rowIndex = 0;
+		    List<Integer> renamedColumnIndexes = new ArrayList<Integer>();
 		    
 		    while (sc.hasNextLine()) {
 		    	String line = sc.nextLine();
 		    	int numberOfColumns;
 	    		String[] cellValues = line.split(cellSeparator);
 	    		numberOfColumns = cellValues.length;		    	
+    			String oldId = cellValues[0]; /* It is assumed that the id is at the first column. */
 
+    			boolean writeLineBreak = rowIndex == 0 ||
+    					                 acceptableIdsCollection.oldIdExists(oldId);
 	    		for (int columnIndex = 0 ; columnIndex < numberOfColumns ; columnIndex++) {
 	    			String cellValue = cellValues[columnIndex];
 	    		
@@ -73,20 +82,23 @@ public class FileReaderWriterService {
 	    				if (columnConfig == null) {
 	    					continue;
 	    				}
+	    				renamedColumnIndexes.add(columnIndex);
 	    				columnConfigCollection.getColumnConfigWithOldName(cellValue).setColumnIndex(columnIndex);
 	    				String header = columnConfigCollection.isColumnRenamed(cellValue) ? columnConfig.getNewColumnName() : cellValue ;
 	    				outputStream.write(header.getBytes());
-	    				outputStream.write(seperator.getBytes());
+	    				outputStream.write(cellSeparator.getBytes());
 	    				continue;
 	    			}
-	    			String oldId = cellValues[0]; /* It is assumed that the id is at the first column. */
 	    			
-	    			if (acceptableIdsCollection.oldIdExists(oldId)) {
+	    			if (acceptableIdsCollection.oldIdExists(oldId) && renamedColumnIndexes.contains(columnIndex)) {
 	    				outputStream.write(cellValue.getBytes());
-	    				outputStream.write(seperator.getBytes());
+	    				outputStream.write(cellSeparator.getBytes());
 	    			}
 	    		}
 	    		
+	    		if (writeLineBreak) {
+	    			outputStream.write(lineSeparator.getBytes());	
+	    		}
 	    		outputStream.flush();
 		        rowIndex++;
 		    }
