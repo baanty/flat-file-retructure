@@ -37,3 +37,15 @@ acceptable.id.file=acceptable_ids.properties  /* Name of the file, given in 1) .
 If the specification is followed and the configuration is done, then the program, DataFileRestructureApp should be run from the
 command prompt or java application runner. It can also be deployed in a TomCat container and the web application intializer will
 do the file conversion.
+
+# Deployment and running the application
+The application can also be run with the help of a web application container. The /target/flat-file-restructure-web.war can be deployed in a web application container ( like tomcat or jBoss or WebSphere ). When the application starts, the properties file of the application must be given the above mentioned properties. If the properties are given vorrectly, then the web application will process the data.
+
+
+
+# Testing the application
+
+The whole flow of the application is well tested with Spring Boot test cases. The Spring boot jUnit test cases copy the sample data
+inside the java temporary directory. Then the main program formats and generates the output. At last the juNit testing unit tests the generated output with the java source code.
+
+
