@@ -47,8 +47,8 @@ public class PropertiesFileConfiguration {
 	public ColumnConfigCollection loadColumnNameConfiguration() {
 		
 		ColumnConfigCollection columnConfigCollection = new ColumnConfigCollection();
-		try {
-			InputStream input = getClass().getClassLoader().getResourceAsStream(columnNameConverterFile);
+		try (InputStream input = getClass().getClassLoader().getResourceAsStream(columnNameConverterFile))
+			{
 			Properties properties = new Properties();
 			properties.load(input);
 			int index = 0; 
@@ -78,8 +78,7 @@ public class PropertiesFileConfiguration {
 	@Bean
 	public AcceptableIdsCollection loadAcceptableIdsCollection() {
 		AcceptableIdsCollection acceptableIdsCollection = new AcceptableIdsCollection();
-		try {
-			InputStream input = getClass().getClassLoader().getResourceAsStream(acceptableIdFile);
+		try (InputStream input = getClass().getClassLoader().getResourceAsStream(acceptableIdFile)) {
 			Properties properties = new Properties();
 			properties.load(input);
 			

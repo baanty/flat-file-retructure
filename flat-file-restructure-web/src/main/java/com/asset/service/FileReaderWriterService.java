@@ -91,7 +91,8 @@ public class FileReaderWriterService {
 	    			}
 	    			
 	    			if (acceptableIdsCollection.oldIdExists(oldId) && renamedColumnIndexes.contains(columnIndex)) {
-	    				outputStream.write(cellValue.getBytes());
+	    				String cellToWrite = columnIndex == 0 ? acceptableIdsCollection.getNewValueOfAcceptableId(cellValue) : cellValue ;
+	    				outputStream.write(cellToWrite.getBytes());
 	    				outputStream.write(cellSeparator.getBytes());
 	    			}
 	    		}
