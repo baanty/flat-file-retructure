@@ -29,9 +29,9 @@ input.file.name=input_data.txt /* This is the name of the input file */
 
 output.file.name=output_data.txt /* This is the name of the output file */
 
-column.name.converter.file=column_converter.properties /* Name of the file, given in 2) . This is configurable */
+column.name.converter.file=column_converter.properties /* Name of the file, which has the column name change mapping. The .properties file must be kept in classpath.*/
 
-acceptable.id.file=acceptable_ids.properties  /* Name of the file, given in 1) . This is configurable */
+acceptable.id.file=acceptable_ids.properties  /* Name of the file, which has the acceptable id data. The .properties file must be kept in classpath.*/
 
 
 If the specification is followed and the configuration is done, then the program, DataFileRestructureApp should be run from the
